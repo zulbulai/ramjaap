@@ -1090,8 +1090,8 @@ https://ramjap.vercel.app/
     }
 
     shareToWhatsApp() {
-        const message = `🌺 *राम नाम जप काउंटर Pro* 🌺\n\n📿 *आज का जप:* ${this.currentCount.toLocaleString()} \n\n📈 *प्रगति:* ${Math.round((this.currentCount / this.dailyGoal) * 100)}%\n\n🎯 *लक्ष्य:* ${this.dailyGoal.toLocaleString()}\n\n🕉️ राम नाम का जाप—शुद्ध मन, सकारात्मक ऊर्जा!\n\nआप भी इस डिवाइन जर्नी से जुड़िए और अपनी जप साधना को रोज़ाना ट्रैक कीजिए। ✨\n\n👇 *अपनी प्रगति रिकॉर्ड करें:*
-https://ramjap.vercel.app/ \n\n🙏✨ #RamNaam #Jap #Spirituality #RamJaap #InnerPeace #Sadhna`;
+        const message = `🌺 *राम नाम जप काउंटर* 🌺\n\n📿 *आज का जप:* ${this.currentCount.toLocaleString()} \n📈 *प्रगति:* ${Math.round((this.currentCount / this.dailyGoal) * 100)}%\n🎯 *लक्ष्य:* ${this.dailyGoal.toLocaleString()}\n🕉️ राम नाम का जाप—शुद्ध मन, सकारात्मक ऊर्जा!\nआप भी इस डिवाइन जर्नी से जुड़िए और अपनी जप साधना को रोज़ाना ट्रैक कीजिए। ✨\n\n👇 *अपनी प्रगति रिकॉर्ड करें:*
+https://ramjap.vercel.app/ \n\n🙏✨ #RamNaam #Jap #Spirituality #RamJaap #InnerPeace #Sadhna\n👇 *Click This Link to Follow my instagram page* 👇\nhttps://www.instagram.com/jitendrauno`;
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');

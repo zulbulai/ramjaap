@@ -839,8 +839,8 @@ body::before {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background-image: url('/background.jpg');
+  height: 100vh;
+  background-image: url('background.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -1131,14 +1131,47 @@ body::after {
   position: relative;
   transition: all var(--timing-normal) var(--easing-bounce);
   cursor: pointer;
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.deity-symbol {
-  font-size: 4.5rem;
-  color: var(--color-gold);
+/* Ram Image Styling */
+.deity-image {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
   filter: drop-shadow(var(--shadow-glow));
   position: relative;
   z-index: 2;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.1) 0%, transparent 70%);
+  padding: 8px;
+}
+
+/* Fallback styling for when ram.png is not available */
+.deity-symbol-fallback {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, rgba(255, 153, 51, 0.1) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--color-gold);
+  box-shadow: var(--shadow-glow);
+  position: relative;
+  z-index: 2;
+}
+
+.ram-text {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--color-gold);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  font-family: 'Noto Sans Devanagari', sans-serif;
 }
 
 .divine-aura {
@@ -2186,8 +2219,19 @@ body::after {
     height: 240px;
   }
   
-  .deity-symbol {
-    font-size: 3.5rem;
+  .ram-image {
+    width: 120px;
+    height: 120px;
+  }
+  
+  .deity-image,
+  .deity-symbol-fallback {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .ram-text {
+    font-size: 2rem;
   }
   
   .counter-box {
@@ -2249,8 +2293,19 @@ body::after {
     height: 200px;
   }
   
-  .deity-symbol {
-    font-size: 3rem;
+  .ram-image {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .deity-image,
+  .deity-symbol-fallback {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .ram-text {
+    font-size: 1.8rem;
   }
   
   .nav-label {

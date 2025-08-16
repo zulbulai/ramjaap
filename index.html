@@ -74,7 +74,10 @@
                             </svg>
                             <div class="ram-image-container">
                                 <div class="ram-image" id="ramImage">
-                                    <div class="deity-symbol">🙏</div>
+                                    <img src="ram.png" alt="श्री राम" class="deity-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                                    <div class="deity-symbol-fallback" style="display: none;">
+                                        <div class="ram-text">राम</div>
+                                    </div>
                                     <div class="divine-aura"></div>
                                 </div>
                             </div>
@@ -415,23 +418,23 @@
         <!-- Sticky Footer Navigation -->
         <footer class="sticky-footer" id="stickyFooter">
             <nav class="footer-nav">
-                <button class="nav-tab active" data-screen="homeScreen">
+                <button class="nav-tab active" data-screen="homeScreen" onclick="event.stopPropagation();">
                     <div class="nav-icon">🏠</div>
                     <div class="nav-label">Home</div>
                 </button>
-                <button class="nav-tab" data-screen="dashboardScreen">
+                <button class="nav-tab" data-screen="dashboardScreen" onclick="event.stopPropagation();">
                     <div class="nav-icon">📊</div>
                     <div class="nav-label">Dashboard</div>
                 </button>
-                <button class="nav-tab" data-screen="resourcesScreen">
+                <button class="nav-tab" data-screen="resourcesScreen" onclick="event.stopPropagation();">
                     <div class="nav-icon">📖</div>
                     <div class="nav-label">Resources</div>
                 </button>
-                <button class="nav-tab" data-screen="settingsScreen">
+                <button class="nav-tab" data-screen="settingsScreen" onclick="event.stopPropagation();">
                     <div class="nav-icon">⚙️</div>
                     <div class="nav-label">Settings</div>
                 </button>
-                <button class="nav-tab" data-screen="shareScreen">
+                <button class="nav-tab" data-screen="shareScreen" onclick="event.stopPropagation();">
                     <div class="nav-icon">📲</div>
                     <div class="nav-label">Share</div>
                 </button>

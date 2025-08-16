@@ -1,4 +1,4 @@
-// राम नाम जप काउंटर Pro - Professional Spiritual Counter (Navigation Fixed)
+// राम नाम जप काउंटर Pro - Professional Spiritual Counter
 
 class RamJapCounterPro {
     constructor() {
@@ -48,44 +48,54 @@ class RamJapCounterPro {
     }
 
     loadData() {
-        const storedCount = localStorage.getItem('ramjap_currentCount');
-        const storedGoal = localStorage.getItem('ramjap_dailyGoal');
-        const storedHistorical = localStorage.getItem('ramjap_historicalData');
-        const storedBgVolume = localStorage.getItem('ramjap_bgVolume');
-        const storedTapVolume = localStorage.getItem('ramjap_tapVolume');
-        const storedLastDate = localStorage.getItem('ramjap_lastDate');
+        // Use fallback for localStorage if not available
+        try {
+            const storedCount = localStorage.getItem('ramjap_currentCount');
+            const storedGoal = localStorage.getItem('ramjap_dailyGoal');
+            const storedHistorical = localStorage.getItem('ramjap_historicalData');
+            const storedBgVolume = localStorage.getItem('ramjap_bgVolume');
+            const storedTapVolume = localStorage.getItem('ramjap_tapVolume');
+            const storedLastDate = localStorage.getItem('ramjap_lastDate');
 
-        if (storedCount !== null) {
-            this.currentCount = parseInt(storedCount) || 0;
-        }
-        if (storedGoal !== null) {
-            this.dailyGoal = parseInt(storedGoal) || 2400;
-        }
-        if (storedHistorical !== null) {
-            try {
-                this.historicalData = JSON.parse(storedHistorical) || {};
-            } catch (e) {
-                this.historicalData = {};
+            if (storedCount !== null) {
+                this.currentCount = parseInt(storedCount) || 0;
             }
-        }
-        if (storedBgVolume !== null) {
-            this.bgVolume = parseFloat(storedBgVolume) || 0.3;
-        }
-        if (storedTapVolume !== null) {
-            this.tapVolume = parseFloat(storedTapVolume) || 0.7;
-        }
-        if (storedLastDate !== null) {
-            this.lastDate = storedLastDate;
+            if (storedGoal !== null) {
+                this.dailyGoal = parseInt(storedGoal) || 2400;
+            }
+            if (storedHistorical !== null) {
+                try {
+                    this.historicalData = JSON.parse(storedHistorical) || {};
+                } catch (e) {
+                    this.historicalData = {};
+                }
+            }
+            if (storedBgVolume !== null) {
+                this.bgVolume = parseFloat(storedBgVolume) || 0.3;
+            }
+            if (storedTapVolume !== null) {
+                this.tapVolume = parseFloat(storedTapVolume) || 0.7;
+            }
+            if (storedLastDate !== null) {
+                this.lastDate = storedLastDate;
+            }
+        } catch (error) {
+            console.log('localStorage not available, using defaults');
         }
     }
 
     saveData() {
-        localStorage.setItem('ramjap_currentCount', this.currentCount.toString());
-        localStorage.setItem('ramjap_dailyGoal', this.dailyGoal.toString());
-        localStorage.setItem('ramjap_lastDate', this.lastDate);
-        localStorage.setItem('ramjap_historicalData', JSON.stringify(this.historicalData));
-        localStorage.setItem('ramjap_bgVolume', this.bgVolume.toString());
-        localStorage.setItem('ramjap_tapVolume', this.tapVolume.toString());
+        // Use fallback for localStorage if not available
+        try {
+            localStorage.setItem('ramjap_currentCount', this.currentCount.toString());
+            localStorage.setItem('ramjap_dailyGoal', this.dailyGoal.toString());
+            localStorage.setItem('ramjap_lastDate', this.lastDate);
+            localStorage.setItem('ramjap_historicalData', JSON.stringify(this.historicalData));
+            localStorage.setItem('ramjap_bgVolume', this.bgVolume.toString());
+            localStorage.setItem('ramjap_tapVolume', this.tapVolume.toString());
+        } catch (error) {
+            console.log('localStorage not available, data not saved');
+        }
     }
 
     getTodayString() {
@@ -129,7 +139,7 @@ class RamJapCounterPro {
     }
 
     setupEventListeners() {
-        // Setup navigation with proper event delegation
+        // Setup navigation
         this.setupNavigation();
         
         // Setup tap area
@@ -147,31 +157,32 @@ class RamJapCounterPro {
                 this.handleFirstInteraction();
             }
         }, { once: true });
+
+        document.addEventListener('touchstart', () => {
+            if (!this.hasUserInteracted) {
+                this.handleFirstInteraction();
+            }
+        }, { once: true });
     }
 
     setupNavigation() {
-        // COMPLETELY REWRITTEN NAVIGATION SYSTEM
-        const footer = document.getElementById('stickyFooter');
-        if (!footer) return;
-
-        // Use event delegation on the footer container
-        footer.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            
-            // Find the nav tab that was clicked
-            const navTab = e.target.closest('.nav-tab');
-            if (!navTab) return;
-            
-            const targetScreenId = navTab.getAttribute('data-screen');
-            console.log('Navigation clicked:', targetScreenId);
-            
-            if (!targetScreenId) return;
-            
-            this.navigateToScreen(targetScreenId);
+        const navTabs = document.querySelectorAll('.nav-tab');
+        
+        navTabs.forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const targetScreenId = tab.getAttribute('data-screen');
+                console.log('Navigation clicked:', targetScreenId);
+                
+                if (targetScreenId) {
+                    this.navigateToScreen(targetScreenId);
+                }
+            });
         });
 
-        console.log('Navigation system initialized with event delegation');
+        console.log('Navigation system initialized');
     }
 
     navigateToScreen(targetScreenId) {
@@ -223,14 +234,19 @@ class RamJapCounterPro {
         if (!this.tapArea) return;
 
         const handleTapEvent = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
+            // Check if the click target is within the navigation area
+            if (e.target.closest('.nav-tab') || e.target.closest('.sticky-footer')) {
+                return; // Don't handle tap if it's on navigation
+            }
             
             // Only handle if on home screen
             const homeScreen = document.getElementById('homeScreen');
             if (!homeScreen || !homeScreen.classList.contains('active')) {
                 return;
             }
+            
+            e.preventDefault();
+            e.stopPropagation();
             
             if (!this.hasUserInteracted) {
                 this.handleFirstInteraction();
@@ -252,11 +268,7 @@ class RamJapCounterPro {
         // Daily Goal Input
         const dailyGoalInput = document.getElementById('dailyGoalInput');
         if (dailyGoalInput) {
-            // Remove existing listeners
-            const newInput = dailyGoalInput.cloneNode(true);
-            dailyGoalInput.parentNode.replaceChild(newInput, dailyGoalInput);
-            
-            newInput.addEventListener('change', (e) => {
+            dailyGoalInput.addEventListener('change', (e) => {
                 e.stopPropagation();
                 const newGoal = parseInt(e.target.value) || 2400;
                 if (newGoal >= 1 && newGoal <= 10000) {

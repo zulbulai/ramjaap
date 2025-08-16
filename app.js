@@ -1,4 +1,4 @@
-// राम नाम जप काउंटर Pro - Professional JavaScript Application (Fixed)
+// राम नाम जप काउंटर Pro - Professional JavaScript Application (FIXED NAVIGATION)
 
 class RamJapCounterPro {
     constructor() {
@@ -133,7 +133,7 @@ class RamJapCounterPro {
             }, { passive: false });
         }
 
-        // FIXED: Navigation setup
+        // CRITICAL FIX: Navigation setup with proper event delegation
         this.setupNavigation();
         
         // Settings
@@ -154,54 +154,108 @@ class RamJapCounterPro {
         this.updateProgressRing();
     }
 
+    // CRITICAL FIX: Fixed navigation system
     setupNavigation() {
-        const navTabs = document.querySelectorAll('.nav-tab');
-        const screens = document.querySelectorAll('.screen');
+        console.log('Setting up navigation...');
+        
+        // Wait for DOM to be ready
+        setTimeout(() => {
+            const navTabs = document.querySelectorAll('.nav-tab');
+            const screens = document.querySelectorAll('.screen');
+            
+            console.log('Found nav tabs:', navTabs.length);
+            console.log('Found screens:', screens.length);
 
-        navTabs.forEach(tab => {
-            tab.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation(); // FIXED: Prevent event bubbling
+            navTabs.forEach((tab, index) => {
+                // Remove any existing listeners
+                tab.removeEventListener('click', this.handleNavClick);
                 
-                if (this.isNavigating) return; // Prevent double navigation
-                this.isNavigating = true;
-                
-                const targetScreenId = tab.getAttribute('data-screen');
-                console.log('Navigating to:', targetScreenId); // Debug log
-                
-                if (!targetScreenId) {
-                    this.isNavigating = false;
-                    return;
-                }
-                
-                // Update nav tabs
-                navTabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-
-                // Update screens
-                screens.forEach(s => s.classList.remove('active'));
-                const targetScreen = document.getElementById(targetScreenId);
-                
-                if (targetScreen) {
-                    targetScreen.classList.add('active');
+                // Add new listener with proper binding
+                tab.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
                     
-                    // Load screen-specific content
-                    setTimeout(() => {
-                        if (targetScreenId === 'dashboardScreen') {
-                            this.updateDashboard();
-                        } else if (targetScreenId === 'shareScreen') {
-                            this.updateShareScreen();
-                        } else if (targetScreenId === 'settingsScreen') {
-                            this.updateSettingsScreen();
-                        }
+                    if (this.isNavigating) {
+                        console.log('Navigation in progress, ignoring click');
+                        return;
+                    }
+                    
+                    this.isNavigating = true;
+                    
+                    const targetScreenId = tab.getAttribute('data-screen');
+                    console.log('Navigation clicked:', targetScreenId, 'by tab index:', index);
+                    
+                    if (!targetScreenId) {
+                        console.error('No target screen ID found');
                         this.isNavigating = false;
-                    }, 100);
-                } else {
-                    console.error('Target screen not found:', targetScreenId);
-                    this.isNavigating = false;
-                }
+                        return;
+                    }
+                    
+                    // Update active states immediately
+                    navTabs.forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+
+                    // Hide all screens
+                    screens.forEach(s => {
+                        s.classList.remove('active');
+                        s.style.display = 'none';
+                    });
+                    
+                    // Show target screen
+                    const targetScreen = document.getElementById(targetScreenId);
+                    if (targetScreen) {
+                        console.log('Showing screen:', targetScreenId);
+                        targetScreen.style.display = 'block';
+                        
+                        // Force reflow
+                        targetScreen.offsetHeight;
+                        
+                        targetScreen.classList.add('active');
+                        
+                        // Load screen-specific content
+                        setTimeout(() => {
+                            if (targetScreenId === 'dashboardScreen') {
+                                this.updateDashboard();
+                            } else if (targetScreenId === 'shareScreen') {
+                                this.updateShareScreen();
+                            } else if (targetScreenId === 'settingsScreen') {
+                                this.updateSettingsScreen();
+                            }
+                            this.isNavigating = false;
+                            console.log('Navigation completed to:', targetScreenId);
+                        }, 50);
+                    } else {
+                        console.error('Target screen not found:', targetScreenId);
+                        this.isNavigating = false;
+                        // Restore home screen if target not found
+                        const homeScreen = document.getElementById('homeScreen');
+                        if (homeScreen) {
+                            homeScreen.style.display = 'block';
+                            homeScreen.classList.add('active');
+                        }
+                        // Restore home tab active state
+                        const homeTab = document.querySelector('[data-screen="homeScreen"]');
+                        if (homeTab) {
+                            navTabs.forEach(t => t.classList.remove('active'));
+                            homeTab.classList.add('active');
+                        }
+                    }
+                });
             });
-        });
+
+            // Ensure home screen is visible initially
+            const homeScreen = document.getElementById('homeScreen');
+            const homeTab = document.querySelector('[data-screen="homeScreen"]');
+            
+            if (homeScreen) {
+                homeScreen.style.display = 'block';
+                homeScreen.classList.add('active');
+            }
+            
+            if (homeTab) {
+                homeTab.classList.add('active');
+            }
+        }, 100);
     }
 
     setupSettings() {
@@ -513,6 +567,7 @@ class RamJapCounterPro {
 
     // Professional Dashboard with Charts
     updateDashboard() {
+        console.log('Updating dashboard...');
         this.updateStats();
         setTimeout(() => {
             this.createCharts();
@@ -561,13 +616,13 @@ class RamJapCounterPro {
                 datasets: [{
                     label: 'Daily Japs',
                     data: data,
-                    borderColor: '#FF9933',
-                    backgroundColor: 'rgba(255, 153, 51, 0.1)',
+                    borderColor: '#1FB8CD',
+                    backgroundColor: '#FFC185',
                     borderWidth: 3,
                     fill: true,
                     tension: 0.4,
-                    pointBackgroundColor: '#FFD700',
-                    pointBorderColor: '#FF6600',
+                    pointBackgroundColor: '#B4413C',
+                    pointBorderColor: '#ECEBD5',
                     pointBorderWidth: 2,
                     pointRadius: 6,
                     pointHoverRadius: 8
@@ -633,16 +688,16 @@ class RamJapCounterPro {
                     {
                         label: 'Completed',
                         data: weeklyData.map(d => d.count),
-                        backgroundColor: '#FF9933',
-                        borderColor: '#FF6600',
+                        backgroundColor: '#5D878F',
+                        borderColor: '#DB4545',
                         borderWidth: 1,
                         borderRadius: 6
                     },
                     {
                         label: 'Goal',
                         data: weeklyData.map(d => d.goal),
-                        backgroundColor: 'rgba(255, 215, 0, 0.3)',
-                        borderColor: '#FFD700',
+                        backgroundColor: '#D2BA4C',
+                        borderColor: '#964325',
                         borderWidth: 2,
                         borderRadius: 6,
                         type: 'line'
@@ -707,12 +762,12 @@ class RamJapCounterPro {
                 datasets: [{
                     data: [completed, remaining],
                     backgroundColor: [
-                        '#FF9933',
-                        'rgba(255, 215, 0, 0.2)'
+                        '#944454',
+                        '#13343B'
                     ],
                     borderColor: [
-                        '#FF6600',
-                        'rgba(255, 215, 0, 0.4)'
+                        '#1FB8CD',
+                        '#FFC185'
                     ],
                     borderWidth: 2
                 }]
@@ -806,6 +861,7 @@ class RamJapCounterPro {
     }
 
     updateShareScreen() {
+        console.log('Updating share screen...');
         const shareCountDisplay = document.getElementById('shareCountDisplay');
         const shareGoalDisplay = document.getElementById('shareGoalDisplay');
         const shareProgressBar = document.getElementById('shareProgressBar');
@@ -1010,10 +1066,15 @@ function openExternalLink(url) {
     }
 }
 
-// Initialize app when DOM is loaded
+// CRITICAL FIX: Ensure proper DOM loading
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing राम नाम जप काउंटर Pro...');
-    window.ramJapCounterPro = new RamJapCounterPro();
+    
+    // Wait a moment for all elements to be ready
+    setTimeout(() => {
+        window.ramJapCounterPro = new RamJapCounterPro();
+        console.log('राम नाम जप काउंटर Pro initialized successfully');
+    }, 100);
 });
 
 // Handle page visibility for data saving

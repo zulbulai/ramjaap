@@ -738,7 +738,7 @@ select.form-control {
 }
 
 /* END PERPLEXITY DESIGN SYSTEM */
-/* Professional राम नाम जप काउंटर Pro - Advanced Styling */
+/* Professional राम नाम जप काउंटर Pro - Advanced Styling with FIXES */
 
 /* Import Professional Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@300;400;500;600;700;800;900&display=swap');
@@ -821,6 +821,7 @@ html {
   scroll-behavior: smooth;
 }
 
+/* FIXED: Background Image with 50% Opacity */
 body {
   font-family: 'Noto Sans Devanagari', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--gradient-secondary);
@@ -829,6 +830,22 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23FFD700" stop-opacity="0.3"/><stop offset="50%" stop-color="%23FF9933" stop-opacity="0.3"/><stop offset="100%" stop-color="%23FF6600" stop-opacity="0.3"/></linearGradient></defs><rect width="1000" height="1000" fill="url(%23grad)"/></svg>');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.5;
+  z-index: -1;
 }
 
 /* Professional Loading Screen */
@@ -954,68 +971,31 @@ body {
   transform: translateY(0);
 }
 
-/* Professional Header */
-.app-header {
-  background: var(--gradient-primary);
-  padding: var(--space-lg) var(--space-md);
+/* FIXED: Simple Plain Header */
+.app-header-simple {
+  background: transparent;
+  padding: var(--space-lg);
   text-align: center;
-  box-shadow: var(--shadow-soft);
+  border: none;
+  box-shadow: none;
   position: relative;
-  overflow: hidden;
   z-index: 1;
 }
 
-.app-header::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-  animation: shimmer 3s ease-in-out infinite;
+.header-simple-content {
+  font-size: var(--font-size-2xl);
+  color: var(--color-spiritual-brown);
+  font-weight: 600;
+  font-family: 'Noto Sans Devanagari', serif;
 }
 
-.header-content {
-  position: relative;
-  z-index: 2;
-}
-
-.header-icon {
-  font-size: 2rem;
-  margin-bottom: var(--space-sm);
-  opacity: 0.9;
-}
-
-.main-title {
-  font-size: var(--font-size-4xl);
-  font-weight: 900;
-  color: white;
-  margin: 0;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
-  letter-spacing: 3px;
-  margin-bottom: var(--space-xs);
-}
-
-.header-subtitle {
-  font-size: var(--font-size-sm);
-  color: rgba(255, 255, 255, 0.8);
-  font-weight: 500;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-@keyframes shimmer {
-  0%, 100% { transform: translateX(-100%) translateY(-100%); }
-  50% { transform: translateX(-50%) translateY(-50%); }
-}
-
-/* Main Content Area */
+/* Main Content Area - FIXED: Bottom padding for footer */
 .main-content {
   flex: 1;
   position: relative;
   z-index: 1;
   min-height: calc(100vh - 200px);
+  padding-bottom: 80px !important; /* Critical: Ensure footer doesn't overlap */
 }
 
 .screen {
@@ -2008,26 +1988,22 @@ body {
   font-style: italic;
 }
 
-/* Professional Footer Navigation */
-.app-footer {
-  background: var(--gradient-surface);
-  border-top: 1px solid rgba(255, 215, 0, 0.2);
-  box-shadow: 0 -4px 16px rgba(139, 69, 19, 0.1);
-  padding: var(--space-sm) 0;
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 480px;
-  z-index: 1000;
-}
-
-.nav-container {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0 var(--space-md);
+/* FIXED: Always Visible Footer Navigation */
+.bottom-navigation {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  max-width: 480px !important;
+  margin: 0 auto !important;
+  z-index: 9999 !important;
+  background: var(--gradient-surface) !important;
+  border-top: 1px solid rgba(255, 215, 0, 0.2) !important;
+  box-shadow: 0 -4px 16px rgba(139, 69, 19, 0.1) !important;
+  display: flex !important;
+  justify-content: space-around !important;
+  padding: var(--space-sm) 0 !important;
 }
 
 .nav-tab {
@@ -2043,6 +2019,7 @@ body {
   transition: all var(--timing-normal) var(--easing-standard);
   position: relative;
   min-width: 60px;
+  color: var(--color-spiritual-brown);
 }
 
 .nav-tab:hover {
@@ -2235,9 +2212,10 @@ body {
 
 /* Responsive Design */
 @media (max-width: 480px) {
-  .app-footer {
-    left: 0;
-    transform: none;
+  .bottom-navigation {
+    left: 0 !important;
+    transform: none !important;
+    max-width: none !important;
   }
   
   .progress-ring-svg {
@@ -2300,8 +2278,8 @@ body {
     font-size: 3rem;
   }
   
-  .main-title {
-    font-size: var(--font-size-3xl);
+  .header-simple-content {
+    font-size: var(--font-size-xl);
   }
   
   .resource-card {

@@ -1070,35 +1070,24 @@ class RamJapCounterPro {
         }
 
         if (messagePreview) {
-            const message = `🌺 *राम नाम जप काउंटर Pro* 🌺
-
-📿 *आज का जप:* ${todayCount}
-🎯 *लक्ष्य:* ${dailyGoal}  
-📈 *प्रगति:* ${progressPercent}%
-
-🕉️ राम नाम का जाप—शुद्ध मन, सकारात्मक ऊर्जा!
-
-आप भी इस डिवाइन जर्नी से जुड़िए और अपनी जप साधना को रोज़ाना ट्रैक कीजिए।
-
-👇 *अपनी प्रगति रिकॉर्ड करें:*
-https://ramjap.vercel.app/
-
-🙏✨ #RamNaam #Jap #Spirituality #RamJaap #InnerPeace #Sadhna`;
+            const message = `🌺 *जय श्रीराम* 🚩\n\n📿 *आज का जप:* ${this.currentCount.toLocaleString()} \n📈 *प्रगति:* ${Math.round((this.currentCount / this.dailyGoal) * 100)}%\n🎯 *लक्ष्य:* ${this.dailyGoal.toLocaleString()}\n\n🕉️ राम नाम का जाप—शुद्ध मन, सकारात्मक ऊर्जा!\nआप भी इस डिवाइन जर्नी से जुड़िए और अपनी जप साधना को रोज़ाना ट्रैक कीजिए। ✨\n\n👇 *अपनी प्रगति रिकॉर्ड करें:*
+https://ramjap.vercel.app/ \n\n🙏✨ #RamNaam #Jap #Spirituality #RamJaap #InnerPeace #Sadhna\n\n👇 *Click This Link to Follow my instagram page* 👇\nhttps://www.instagram.com/jitendrauno`;
             messagePreview.textContent = message;
         }
         console.log('Share screen updated');
     }
 
     shareToWhatsApp() {
-        const message = `🌺 *राम नाम जप काउंटर* 🌺\n\n📿 *आज का जप:* ${this.currentCount.toLocaleString()} \n📈 *प्रगति:* ${Math.round((this.currentCount / this.dailyGoal) * 100)}%\n🎯 *लक्ष्य:* ${this.dailyGoal.toLocaleString()}\n🕉️ राम नाम का जाप—शुद्ध मन, सकारात्मक ऊर्जा!\nआप भी इस डिवाइन जर्नी से जुड़िए और अपनी जप साधना को रोज़ाना ट्रैक कीजिए। ✨\n\n👇 *अपनी प्रगति रिकॉर्ड करें:*
-https://ramjap.vercel.app/ \n\n🙏✨ #RamNaam #Jap #Spirituality #RamJaap #InnerPeace #Sadhna\n👇 *Click This Link to Follow my instagram page* 👇\nhttps://www.instagram.com/jitendrauno`;
+        const message = `🌺 *जय श्रीराम* 🚩\n\n📿 *आज का जप:* ${this.currentCount.toLocaleString()} \n📈 *प्रगति:* ${Math.round((this.currentCount / this.dailyGoal) * 100)}%\n🎯 *लक्ष्य:* ${this.dailyGoal.toLocaleString()}\n\n🕉️ राम नाम का जाप—शुद्ध मन, सकारात्मक ऊर्जा!\nआप भी इस डिवाइन जर्नी से जुड़िए और अपनी जप साधना को रोज़ाना ट्रैक कीजिए। ✨\n\n👇 *अपनी प्रगति रिकॉर्ड करें:*
+https://ramjap.vercel.app/ \n\n🙏✨ #RamNaam #Jap #Spirituality #RamJaap #InnerPeace #Sadhna\n\n👇 *Click This Link to Follow my instagram page* 👇\nhttps://www.instagram.com/jitendrauno`;
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
         window.open(whatsappUrl, '_blank');
     }
 
     shareToSocial() {
-        const message = `🙏 आज मैंने ${this.currentCount.toLocaleString()} बार राम नाम का जप किया! राम नाम जप काउंटर Pro के साथ अपनी आध्यात्मिक यात्रा जारी रखें। #रामनाम #जप #आध्यात्म ✨`;
+        const message = `🌺 *जय श्रीराम* 🚩\n\n📿 *आज का जप:* ${this.currentCount.toLocaleString()} \n📈 *प्रगति:* ${Math.round((this.currentCount / this.dailyGoal) * 100)}%\n🎯 *लक्ष्य:* ${this.dailyGoal.toLocaleString()}\n\n🕉️ राम नाम का जाप—शुद्ध मन, सकारात्मक ऊर्जा!\nआप भी इस डिवाइन जर्नी से जुड़िए और अपनी जप साधना को रोज़ाना ट्रैक कीजिए। ✨\n\n👇 *अपनी प्रगति रिकॉर्ड करें:*
+https://ramjap.vercel.app/ \n\n🙏✨ #RamNaam #Jap #Spirituality #RamJaap #InnerPeace #Sadhna\n\n👇 *Click This Link to Follow my instagram page* 👇\nhttps://www.instagram.com/jitendrauno`;
         
         if (navigator.share) {
             navigator.share({

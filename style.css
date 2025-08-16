@@ -832,6 +832,8 @@ body {
   position: relative;
 }
 
+
+/* Background Image with 60% Opacity */
 body::before {
     content: '';
     position: fixed;
@@ -841,22 +843,6 @@ body::before {
     z-index: -1;
 }
 
-
-/* Background Image with 60% Opacity */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background-image: url('background.jpg');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.6;
-  z-index: -1;
-}
 
 /* Fallback pattern if image doesn't load */
 body::after {
